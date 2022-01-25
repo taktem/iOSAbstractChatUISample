@@ -14,6 +14,12 @@ final class ChatContainerViewController: UIViewController {
 
     @IBOutlet private weak var containerView: UIView!
 
+    private let chatViewController = AbstractChatViewController(
+        configuration: AbstractChatConfiguration(),
+        xibLinkedClasses: [
+            AbstractChatSimpleMessageCell.self
+        ])
+
     private let dependency: Depndency
 
     init(dependency: Depndency) {
@@ -28,11 +34,6 @@ final class ChatContainerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let chatViewController = AbstractChatViewController(
-            configuration: AbstractChatConfiguration(),
-            xibLinkedClasses: [
-                AbstractChatSimpleMessageCell.self
-            ])
         addChild(chatViewController)
         containerView.addSubview(chatViewController.view)
         chatViewController.view.snap(to: containerView)
@@ -41,6 +42,34 @@ final class ChatContainerViewController: UIViewController {
 
     @IBAction private func didTapCloseButton() {
         dependency.closeAction()
+    }
+
+    @IBAction private func didTapAddNewButton() {
+        let item = AbstractChatSimpleMessageItemDataSource(
+            identifier: .init(value: UUID().uuidString),
+            item: AbstractChatSimpleMessageCell.Item(message: "新しいメッセージ")
+        )
+        let data = AbstractChatSection(data: AbstractChatSimpleMessageSectionData(
+            identifier: .init(value: UUID().uuidString),
+            item: item
+        ))
+        chatViewController.append(newMessage: data)
+    }
+
+    @IBAction private func didTapAddPrevButton() {
+        let items = Array(0..<10).map {
+            AbstractChatSimpleMessageItemDataSource(
+                identifier: .init(value: UUID().uuidString),
+                item: AbstractChatSimpleMessageCell.Item(message: "古いメッセージ: \($0)")
+            )
+        }
+        let data = items.map {
+            AbstractChatSection(data: AbstractChatSimpleMessageSectionData(
+                identifier: .init(value: UUID().uuidString),
+                item: $0
+            ))
+        }
+        chatViewController.append(previewsMessages: data)
     }
 }
 

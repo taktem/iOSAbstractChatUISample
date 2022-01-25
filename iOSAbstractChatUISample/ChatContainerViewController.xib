@@ -24,12 +24,43 @@
                     <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Frn-8Z-Wha">
-                            <rect key="frame" x="357.5" y="0.0" width="40.5" height="44"/>
+                            <rect key="frame" x="178" y="0.0" width="220" height="44"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="close" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NwP-60-nEO" userLabel="Close">
-                                    <rect key="frame" x="0.0" y="0.0" width="40.5" height="44"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ckB-Er-ZvU" userLabel="AddPrev">
+                                    <rect key="frame" x="0.0" y="0.0" width="80" height="44"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="v8z-vg-l6v"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <buttonConfiguration key="configuration" style="plain"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="Add Prev"/>
+                                    <connections>
+                                        <action selector="didTapAddPrevButton" destination="-1" eventType="touchUpInside" id="kAJ-B1-mBu"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rl8-Xa-GlT" userLabel="AddNew">
+                                    <rect key="frame" x="80" y="0.0" width="80" height="44"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="BxC-Hg-QpP"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="Add New"/>
+                                    <connections>
+                                        <action selector="didTapAddNewButton" destination="-1" eventType="touchUpInside" id="ORJ-Hi-pUZ"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NwP-60-nEO" userLabel="Close">
+                                    <rect key="frame" x="160" y="0.0" width="60" height="44"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="mo5-dW-yvD"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="Close"/>
                                     <connections>
                                         <action selector="didTapCloseButton" destination="-1" eventType="touchUpInside" id="HvH-lu-2DA"/>
                                     </connections>

@@ -13,7 +13,8 @@ public final class AbstractChatViewController: UIViewController {
     private let configuration: AbstractChatConfiguration
     private let registerer: ((UICollectionView) -> Void)
 
-    private lazy var diffableDataSource: UICollectionViewDiffableDataSource<Int, Int>! = nil
+    private lazy var diffableDataSource: UICollectionViewDiffableDataSource<AbstractChatSection, AbstractChatItem>! = nil
+    private var sections: [AbstractChatSection] = []
 
     public init<T: XibLinkedClassProtocol>(
         configuration: AbstractChatConfiguration,
@@ -36,46 +37,50 @@ public final class AbstractChatViewController: UIViewController {
         super.viewDidLoad()
 
         setupCollectionView()
-        appendMock()
     }
 
     private func setupCollectionView() {
         registerer(chatCollectionView)
 
         chatCollectionView.delegate = self
-        chatCollectionView.collectionViewLayout = UICollectionViewCompositionalLayout { (section: Int, environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            let item = NSCollectionLayoutItem(layoutSize: .init(
-                widthDimension: .fractionalWidth(1.0),
-                heightDimension: .estimated(200.0)
-            ))
-            let group = NSCollectionLayoutGroup.horizontal(
-                layoutSize: .init(
-                    widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .estimated(200.0)
-                ),
-                subitems: [item]
-            )
-            return NSCollectionLayoutSection(group: group)
+        chatCollectionView.collectionViewLayout = UICollectionViewCompositionalLayout { [weak self] (section: Int, environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            guard let strongSelf = self else { return nil }
+            let section = strongSelf.sections[section]
+            return section.data.layout
         }
         chatCollectionView.transform = CGAffineTransform(scaleX: 1, y: -1)
 
         diffableDataSource = UICollectionViewDiffableDataSource(
-            collectionView: chatCollectionView) { [weak self] _collectionView,
-            indexPath, appliance in
+            collectionView: chatCollectionView) { [weak self] _collectionView, indexPath, appliance in
                 guard let strongSelf = self else { return UICollectionViewCell() }
-                let cell = strongSelf.chatCollectionView.dequeue(xibLinkedClass: AbstractChatSimpleMessageCell.self, for: indexPath, configure: { _ in })
+                let item = strongSelf.sections[indexPath.section].data.items[indexPath.item]
+
+                let cell = item.dataSource.dequeue(target: _collectionView, indexPath: indexPath)
                 cell.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
                 return cell
         }
     }
 
-    func appendMock() {
+    public func append(previewsMessages: [AbstractChatSection]) {
         var snapshot = diffableDataSource.snapshot()
-        Array(0..<20).forEach {
+        previewsMessages.forEach {
             snapshot.appendSections([$0])
-            snapshot.appendItems([$0], toSection: $0)
+            snapshot.appendItems($0.data.items, toSection: $0)
         }
+        sections.append(contentsOf: previewsMessages)
         diffableDataSource.apply(snapshot, animatingDifferences: false)
+    }
+
+    public func append(newMessage: AbstractChatSection) {
+        var snapshot = diffableDataSource.snapshot()
+        if let beforeSection = sections.first {
+            snapshot.insertSections([newMessage], beforeSection: beforeSection)
+        } else {
+            snapshot.appendSections([newMessage])
+        }
+        snapshot.appendItems(newMessage.data.items, toSection: newMessage)
+        sections.insert(newMessage, at: 0)
+        diffableDataSource.apply(snapshot, animatingDifferences: true)
     }
 }
 

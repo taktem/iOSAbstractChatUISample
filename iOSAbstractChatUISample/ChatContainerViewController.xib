@@ -22,12 +22,30 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CNE-2w-n0s">
                     <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Frn-8Z-Wha">
+                            <rect key="frame" x="357.5" y="0.0" width="40.5" height="44"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="close" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NwP-60-nEO" userLabel="Close">
+                                    <rect key="frame" x="0.0" y="0.0" width="40.5" height="44"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <buttonConfiguration key="configuration" style="plain"/>
+                                    <connections>
+                                        <action selector="didTapCloseButton" destination="-1" eventType="touchUpInside" id="HvH-lu-2DA"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
+                    </subviews>
                     <color key="backgroundColor" systemColor="systemPinkColor"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="Gcg-9A-7gf"/>
+                        <constraint firstAttribute="trailing" secondItem="Frn-8Z-Wha" secondAttribute="trailing" constant="16" id="dcs-4V-jTb"/>
+                        <constraint firstItem="Frn-8Z-Wha" firstAttribute="top" secondItem="CNE-2w-n0s" secondAttribute="top" id="h6M-Pw-nOI"/>
+                        <constraint firstAttribute="bottom" secondItem="Frn-8Z-Wha" secondAttribute="bottom" id="t2h-du-Fzn"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="djA-px-5oA">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="djA-px-5oA" userLabel="ChatContainer">
                     <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </view>

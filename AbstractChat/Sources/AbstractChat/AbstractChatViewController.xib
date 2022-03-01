@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AbstractChatViewController" customModuleProvider="target">
             <connections>
                 <outlet property="chatCollectionView" destination="OBN-j2-Y0G" id="bFI-p5-fGQ"/>
+                <outlet property="inputStackView" destination="jcp-UE-nlP" id="3Ng-vk-5u3"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -21,8 +22,8 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="OBN-j2-Y0G">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="774"/>
+                    <color key="backgroundColor" red="0.93333333333333335" green="0.92549019607843142" blue="0.92156862745098034" alpha="1" colorSpace="calibratedRGB"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="jGK-wK-pi8">
                         <size key="itemSize" width="128" height="128"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -30,15 +31,42 @@
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
                 </collectionView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="63c-4k-6X7" userLabel="InputContainer">
+                    <rect key="frame" x="0.0" y="818" width="414" height="44"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jcp-UE-nlP">
+                            <rect key="frame" x="16" y="0.0" width="382" height="44"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="94Y-R2-191" userLabel="Dummy">
+                                    <rect key="frame" x="0.0" y="0.0" width="382" height="44"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="44" id="ngU-X4-ila"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="jcp-UE-nlP" secondAttribute="trailing" constant="16" id="3LS-L8-5g2"/>
+                        <constraint firstItem="jcp-UE-nlP" firstAttribute="top" secondItem="63c-4k-6X7" secondAttribute="top" id="Lkz-Sz-7RO"/>
+                        <constraint firstAttribute="bottom" secondItem="jcp-UE-nlP" secondAttribute="bottom" id="jeg-eN-2lN"/>
+                        <constraint firstItem="jcp-UE-nlP" firstAttribute="leading" secondItem="63c-4k-6X7" secondAttribute="leading" constant="16" id="qAZ-p8-x6A"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="OBN-j2-Y0G" secondAttribute="bottom" id="3YV-ew-VTp"/>
                 <constraint firstItem="OBN-j2-Y0G" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="3yR-gf-Egt"/>
-                <constraint firstAttribute="trailing" secondItem="OBN-j2-Y0G" secondAttribute="trailing" id="tLN-Al-moG"/>
+                <constraint firstItem="63c-4k-6X7" firstAttribute="top" secondItem="OBN-j2-Y0G" secondAttribute="bottom" id="F8F-ix-XCB"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="OBN-j2-Y0G" secondAttribute="trailing" id="GQe-aJ-aYR"/>
+                <constraint firstItem="63c-4k-6X7" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="KAB-Li-89A"/>
+                <constraint firstItem="63c-4k-6X7" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="KM4-Es-nmh"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="63c-4k-6X7" secondAttribute="trailing" id="v6J-xx-h3e"/>
                 <constraint firstItem="OBN-j2-Y0G" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="wlU-G9-yPM"/>
             </constraints>
-            <point key="canvasLocation" x="139" y="114"/>
+            <point key="canvasLocation" x="137.68115942028987" y="113.83928571428571"/>
         </view>
     </objects>
     <resources>

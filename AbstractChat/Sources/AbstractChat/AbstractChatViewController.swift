@@ -5,10 +5,15 @@
 
 import UIKit
 import UIUtility
+import Combine
 
 public final class AbstractChatViewController: UIViewController {
 
     @IBOutlet private weak var chatCollectionView: UICollectionView!
+    @IBOutlet private weak var inputStackView: UIStackView!
+
+    private var anyCancellable = Set<AnyCancellable>()
+    private let keyboardObserver = KeyboardObserver()
 
     private let configuration: AbstractChatConfiguration
     private let registerer: ((UICollectionView) -> Void)
@@ -35,7 +40,14 @@ public final class AbstractChatViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupBinding()
         setupCollectionView()
+    }
+
+    private func setupBinding() {
+        keyboardObserver.stream
+            .sink { [weak self] in self?.applyAdditionalSafeAreaInsetsBottom(with: $0) }
+            .store(in: &anyCancellable)
     }
 
     private func setupCollectionView() {
@@ -59,6 +71,16 @@ public final class AbstractChatViewController: UIViewController {
                 cell.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
                 return cell
         }
+    }
+
+    public func configureInputComponents(
+        mainInput: AbstractChatMainInputComponent,
+        optionalInputs: [AbstractChatOptionalInputComponent]
+    ) {
+        inputStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+
+        inputStackView.addArrangedSubview(mainInput)
+        // TODO: - optionalInputs
     }
 
     public func configure(messages: [AbstractChatSection]) {

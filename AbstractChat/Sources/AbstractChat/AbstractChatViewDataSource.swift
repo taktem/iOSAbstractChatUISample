@@ -61,3 +61,19 @@ public struct AbstractChatItem: Hashable {
         hasher.combine(dataSource.identifier)
     }
 }
+
+public protocol AbstractChatMainInputComponent: UIView {
+    
+}
+
+public struct AbstractChatOptionalInputDataSource {
+    enum Icon {
+        case image(UIImage)
+    }
+    let icon: Icon
+    let component: AbstractChatOptionalInputComponent
+}
+
+public protocol AbstractChatOptionalInputComponent: UIView {
+
+}

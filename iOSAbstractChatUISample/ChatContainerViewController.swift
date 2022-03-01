@@ -4,6 +4,7 @@
 //
 
 import UIKit
+import UIUtility
 import AbstractChat
 
 final class ChatContainerViewController: UIViewController {
@@ -39,16 +40,18 @@ final class ChatContainerViewController: UIViewController {
         containerView.addSubview(chatViewController.view)
         chatViewController.view.snap(to: containerView)
         chatViewController.didMove(toParent: self)
+
+        chatViewController.configureInputComponents(
+            mainInput: AbstractChatMainInputComponentText(didSubmitText: { [weak self] in
+                self?.addNewMessage(text: $0)
+            })
+        )
     }
 
-    @IBAction private func didTapCloseButton() {
-        dependency.closeAction()
-    }
-
-    @IBAction private func didTapAddNewButton() {
+    private func addNewMessage(text: String) {
         let item = AbstractChatSimpleMessageItemDataSource(
             identifier: .init(value: UUID().uuidString),
-            item: AbstractChatSimpleMessageCell.Item(message: "新しいメッセージ")
+            item: AbstractChatSimpleMessageCell.Item(message: text)
         )
         let data = AbstractChatSection(data: AbstractChatSimpleMessageSectionData(
             identifier: .init(value: UUID().uuidString),
@@ -61,6 +64,14 @@ final class ChatContainerViewController: UIViewController {
             messeges.insert(data, at: 0)
         }
         chatViewController.configure(messages: messeges)
+    }
+
+    @IBAction private func didTapCloseButton() {
+        dependency.closeAction()
+    }
+
+    @IBAction private func didTapAddNewButton() {
+        addNewMessage(text: "新しいメッセージ")
     }
 
     @IBAction private func didTapAddPrevButton() {

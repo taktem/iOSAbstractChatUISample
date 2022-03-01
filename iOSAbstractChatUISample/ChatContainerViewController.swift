@@ -21,6 +21,7 @@ final class ChatContainerViewController: UIViewController {
         ])
 
     private let dependency: Depndency
+    private var messeges = [AbstractChatSection]()
 
     init(dependency: Depndency) {
         self.dependency = dependency
@@ -53,7 +54,13 @@ final class ChatContainerViewController: UIViewController {
             identifier: .init(value: UUID().uuidString),
             item: item
         ))
-        chatViewController.append(newMessage: data)
+
+        if messeges.isEmpty {
+            messeges = [data]
+        } else {
+            messeges.insert(data, at: 0)
+        }
+        chatViewController.configure(messages: messeges)
     }
 
     @IBAction private func didTapAddPrevButton() {
@@ -69,7 +76,8 @@ final class ChatContainerViewController: UIViewController {
                 item: $0
             ))
         }
-        chatViewController.append(previewsMessages: data)
+        messeges.append(contentsOf: data)
+        chatViewController.configure(messages: messeges)
     }
 }
 

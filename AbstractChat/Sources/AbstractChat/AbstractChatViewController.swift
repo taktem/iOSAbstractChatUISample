@@ -14,7 +14,6 @@ public final class AbstractChatViewController: UIViewController {
     private let registerer: ((UICollectionView) -> Void)
 
     private lazy var diffableDataSource: UICollectionViewDiffableDataSource<AbstractChatSection, AbstractChatItem>! = nil
-    private var sections: [AbstractChatSection] = []
 
     public init<T: XibLinkedClassProtocol>(
         configuration: AbstractChatConfiguration,
@@ -45,7 +44,7 @@ public final class AbstractChatViewController: UIViewController {
         chatCollectionView.delegate = self
         chatCollectionView.collectionViewLayout = UICollectionViewCompositionalLayout { [weak self] (section: Int, environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             guard let strongSelf = self else { return nil }
-            let section = strongSelf.sections[section]
+            let section = strongSelf.diffableDataSource.snapshot().sectionIdentifiers[section]
             return section.data.layout
         }
         chatCollectionView.transform = CGAffineTransform(scaleX: 1, y: -1)
@@ -53,12 +52,22 @@ public final class AbstractChatViewController: UIViewController {
         diffableDataSource = UICollectionViewDiffableDataSource(
             collectionView: chatCollectionView) { [weak self] _collectionView, indexPath, appliance in
                 guard let strongSelf = self else { return UICollectionViewCell() }
-                let item = strongSelf.sections[indexPath.section].data.items[indexPath.item]
+                let section = strongSelf.diffableDataSource.snapshot().sectionIdentifiers[indexPath.section]
+                let item = strongSelf.diffableDataSource.snapshot().itemIdentifiers(inSection: section)[indexPath.item]
 
                 let cell = item.dataSource.dequeue(target: _collectionView, indexPath: indexPath)
                 cell.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
                 return cell
         }
+    }
+
+    public func configure(messages: [AbstractChatSection]) {
+        var snapshot = NSDiffableDataSourceSnapshot<AbstractChatSection, AbstractChatItem>()
+        messages.forEach {
+            snapshot.appendSections([$0])
+            snapshot.appendItems($0.data.items, toSection: $0)
+        }
+        diffableDataSource.apply(snapshot, animatingDifferences: true)
     }
 
     public func append(previewsMessages: [AbstractChatSection]) {
@@ -67,19 +76,17 @@ public final class AbstractChatViewController: UIViewController {
             snapshot.appendSections([$0])
             snapshot.appendItems($0.data.items, toSection: $0)
         }
-        sections.append(contentsOf: previewsMessages)
         diffableDataSource.apply(snapshot, animatingDifferences: false)
     }
 
     public func append(newMessage: AbstractChatSection) {
         var snapshot = diffableDataSource.snapshot()
-        if let beforeSection = sections.first {
+        if let beforeSection = snapshot.sectionIdentifiers.first {
             snapshot.insertSections([newMessage], beforeSection: beforeSection)
         } else {
             snapshot.appendSections([newMessage])
         }
         snapshot.appendItems(newMessage.data.items, toSection: newMessage)
-        sections.insert(newMessage, at: 0)
         diffableDataSource.apply(snapshot, animatingDifferences: true)
     }
 }

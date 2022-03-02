@@ -10,6 +10,7 @@
 		6525CB3A279F01E600A7F863 /* ChatContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6525CB38279F01E600A7F863 /* ChatContainerViewController.swift */; };
 		6525CB3B279F01E600A7F863 /* ChatContainerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6525CB39279F01E600A7F863 /* ChatContainerViewController.xib */; };
 		6525CB4427A0417D00A7F863 /* AbstractChat in Frameworks */ = {isa = PBXBuildFile; productRef = 6525CB4327A0417D00A7F863 /* AbstractChat */; };
+		65647B2A27CE7D8B009F38BF /* ChatContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65647B2927CE7D8B009F38BF /* ChatContainerViewModel.swift */; };
 		65FFEB5C279DBEAA00E882E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FFEB5B279DBEAA00E882E6 /* AppDelegate.swift */; };
 		65FFEB5E279DBEAA00E882E6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FFEB5D279DBEAA00E882E6 /* SceneDelegate.swift */; };
 		65FFEB60279DBEAA00E882E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FFEB5F279DBEAA00E882E6 /* ViewController.swift */; };
@@ -34,6 +35,7 @@
 		6525CB39279F01E600A7F863 /* ChatContainerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatContainerViewController.xib; sourceTree = "<group>"; };
 		6525CB4127A0414800A7F863 /* UIUtility */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = UIUtility; sourceTree = "<group>"; };
 		6525CB4227A0415A00A7F863 /* AbstractChat */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AbstractChat; sourceTree = "<group>"; };
+		65647B2927CE7D8B009F38BF /* ChatContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContainerViewModel.swift; sourceTree = "<group>"; };
 		65FFEB58279DBEAA00E882E6 /* iOSAbstractChatUISample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSAbstractChatUISample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65FFEB5B279DBEAA00E882E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		65FFEB5D279DBEAA00E882E6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				65FFEB69279DBEAC00E882E6 /* Info.plist */,
 				6525CB38279F01E600A7F863 /* ChatContainerViewController.swift */,
 				6525CB39279F01E600A7F863 /* ChatContainerViewController.xib */,
+				65647B2927CE7D8B009F38BF /* ChatContainerViewModel.swift */,
 			);
 			path = iOSAbstractChatUISample;
 			sourceTree = "<group>";
@@ -230,6 +233,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65647B2A27CE7D8B009F38BF /* ChatContainerViewModel.swift in Sources */,
 				65FFEB60279DBEAA00E882E6 /* ViewController.swift in Sources */,
 				65FFEB5C279DBEAA00E882E6 /* AppDelegate.swift in Sources */,
 				6525CB3A279F01E600A7F863 /* ChatContainerViewController.swift in Sources */,

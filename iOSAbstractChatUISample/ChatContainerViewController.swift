@@ -6,6 +6,7 @@
 import UIKit
 import UIUtility
 import AbstractChat
+import Combine
 
 final class ChatContainerViewController: UIViewController {
 
@@ -22,6 +23,8 @@ final class ChatContainerViewController: UIViewController {
         ])
 
     private let dependency: Depndency
+    private var anyCancellable = Set<AnyCancellable>()
+    private let viewModel = ChatContainerViewModel()
     private var messeges = [AbstractChatSection]()
 
     init(dependency: Depndency) {
@@ -41,53 +44,46 @@ final class ChatContainerViewController: UIViewController {
         chatViewController.view.snap(to: containerView)
         chatViewController.didMove(toParent: self)
 
+        setupBinding()
+        setupChatView()
+    }
+
+    private func setupChatView() {
         chatViewController.configureInputComponents(
             mainInput: AbstractChatMainInputComponentText(didSubmitText: { [weak self] in
-                self?.addNewMessage(text: $0)
-            })
+                self?.viewModel.didSubmit(text: $0)
+            }),
+            optionalInputs: []
         )
     }
 
-    private func addNewMessage(text: String) {
-        let item = AbstractChatSimpleMessageItemDataSource(
-            identifier: .init(value: UUID().uuidString),
-            item: AbstractChatSimpleMessageCell.Item(message: text)
-        )
-        let data = AbstractChatSection(data: AbstractChatSimpleMessageSectionData(
-            identifier: .init(value: UUID().uuidString),
-            item: item
-        ))
+    private func setupBinding() {
+        viewModel.event
+            .sink(receiveValue: { [weak self] in
+                switch $0 {
+                case .requestedClose:
+                    self?.dependency.closeAction()
+                }
+            })
+            .store(in: &anyCancellable)
 
-        if messeges.isEmpty {
-            messeges = [data]
-        } else {
-            messeges.insert(data, at: 0)
-        }
-        chatViewController.configure(messages: messeges)
+        viewModel.messeges
+            .sink(receiveValue: { [weak self] in
+                self?.chatViewController.configure(messages: $0)
+            })
+            .store(in: &anyCancellable)
     }
 
     @IBAction private func didTapCloseButton() {
-        dependency.closeAction()
+        viewModel.didTapCloseButton()
     }
 
+    // Mock
     @IBAction private func didTapAddNewButton() {
-        addNewMessage(text: "新しいメッセージ")
+        viewModel.didSubmit(text: "新しいメッセージ")
     }
 
     @IBAction private func didTapAddPrevButton() {
-        let items = Array(0..<10).map {
-            AbstractChatSimpleMessageItemDataSource(
-                identifier: .init(value: UUID().uuidString),
-                item: AbstractChatSimpleMessageCell.Item(message: "古いメッセージ: \($0)")
-            )
-        }
-        let data = items.map {
-            AbstractChatSection(data: AbstractChatSimpleMessageSectionData(
-                identifier: .init(value: UUID().uuidString),
-                item: $0
-            ))
-        }
-        messeges.append(contentsOf: data)
-        chatViewController.configure(messages: messeges)
+        viewModel.didTapAddPrevButton()
     }
 }

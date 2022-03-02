@@ -91,26 +91,6 @@ public final class AbstractChatViewController: UIViewController {
         }
         diffableDataSource.apply(snapshot, animatingDifferences: true)
     }
-
-    public func append(previewsMessages: [AbstractChatSection]) {
-        var snapshot = diffableDataSource.snapshot()
-        previewsMessages.forEach {
-            snapshot.appendSections([$0])
-            snapshot.appendItems($0.data.items, toSection: $0)
-        }
-        diffableDataSource.apply(snapshot, animatingDifferences: false)
-    }
-
-    public func append(newMessage: AbstractChatSection) {
-        var snapshot = diffableDataSource.snapshot()
-        if let beforeSection = snapshot.sectionIdentifiers.first {
-            snapshot.insertSections([newMessage], beforeSection: beforeSection)
-        } else {
-            snapshot.appendSections([newMessage])
-        }
-        snapshot.appendItems(newMessage.data.items, toSection: newMessage)
-        diffableDataSource.apply(snapshot, animatingDifferences: true)
-    }
 }
 
 extension AbstractChatViewController: UICollectionViewDelegate {

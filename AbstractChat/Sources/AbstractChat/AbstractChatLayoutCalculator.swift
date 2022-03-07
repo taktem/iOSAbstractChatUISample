@@ -8,15 +8,26 @@
 import Foundation
 
 struct AbstractChatLayoutCalculator {
-    static func distanceFromBottomEdge(
+    static func differenceContentOffsetFromBottomEdge(
         containerHeight: Double,
         contentHeight: Double,
         contentOffetY: Double
     ) -> Double {
-        if containerHeight >= contentHeight {
+        guard containerHeight < contentHeight else {
             return containerHeight
-        } else {
-            return contentHeight - contentOffetY
         }
+
+        return contentHeight - contentOffetY
+    }
+    static func contentOffsetWithdifferenceFromBottomEdge(
+        containerHeight: Double,
+        contentHeight: Double,
+        differenceFromBottomEdge: Double
+    ) -> Double {
+        guard containerHeight < contentHeight else {
+            return 0
+        }
+
+        return contentHeight - differenceFromBottomEdge
     }
 }

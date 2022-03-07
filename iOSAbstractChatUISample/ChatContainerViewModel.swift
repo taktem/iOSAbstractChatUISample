@@ -2,7 +2,7 @@
 //  ChatContainerViewModel.swift
 //  iOSAbstractChatUISample
 //
-//  Created by Taku Nishimura on 2022/03/02.
+//  Created by taktem on 2022/03/02.
 //
 
 import Foundation
@@ -20,7 +20,6 @@ final class ChatContainerViewModel: ObservableObject {
     func didSubmit(text: String) {
         addNewMessage(text: text)
     }
-    
 
     private func addNewMessage(text: String) {
         let item = AbstractChatSimpleMessageItemDataSource(
@@ -32,11 +31,7 @@ final class ChatContainerViewModel: ObservableObject {
             item: item
         ))
 
-        if messeges.value.isEmpty {
-            messeges.send([data])
-        } else {
-            messeges.value.insert(data, at: 0)
-        }
+        messeges.value.append(contentsOf: [data])
     }
 
     func didTapCloseButton() {
@@ -57,6 +52,10 @@ final class ChatContainerViewModel: ObservableObject {
                 item: $0
             ))
         }
-        messeges.value.append(contentsOf: data)
+        if messeges.value.isEmpty {
+            messeges.send(data)
+        } else {
+            messeges.value.insert(contentsOf: data, at: 0)
+        }
     }
 }

@@ -13,7 +13,16 @@ final class ViewController: UIViewController {
                 self?.dismiss(animated: true)
             }
         ))
-        controller.modalPresentationStyle = .fullScreen
-        present(controller, animated: true)
+        if #available(iOS 15.0, *) {
+            if let sheet = controller.sheetPresentationController {
+                sheet.detents = [.medium(), .large()]
+                sheet.prefersScrollingExpandsWhenScrolledToEdge = true
+                sheet.prefersEdgeAttachedInCompactHeight = false
+                sheet.prefersScrollingExpandsWhenScrolledToEdge = true
+            }
+            present(controller, animated: true, completion: nil)
+        } else {
+            present(controller, animated: true, completion: nil)
+        }
     }
 }

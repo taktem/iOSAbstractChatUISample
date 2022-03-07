@@ -59,7 +59,6 @@ public final class AbstractChatViewController: UIViewController {
             let section = strongSelf.diffableDataSource.snapshot().sectionIdentifiers[section]
             return section.data.layout
         }
-        chatCollectionView.transform = CGAffineTransform(scaleX: 1, y: -1)
 
         diffableDataSource = UICollectionViewDiffableDataSource(
             collectionView: chatCollectionView) { [weak self] _collectionView, indexPath, appliance in
@@ -68,7 +67,6 @@ public final class AbstractChatViewController: UIViewController {
                 let item = strongSelf.diffableDataSource.snapshot().itemIdentifiers(inSection: section)[indexPath.item]
 
                 let cell = item.dataSource.dequeue(target: _collectionView, indexPath: indexPath)
-                cell.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
                 return cell
         }
     }
@@ -84,12 +82,19 @@ public final class AbstractChatViewController: UIViewController {
     }
 
     public func configure(messages: [AbstractChatSection]) {
+        let beforePosition = AbstractChatLayoutCalculator.distanceFromBottomEdge(
+            containerHeight: chatCollectionView.bounds.height,
+            contentHeight: chatCollectionView.contentSize.height,
+            contentOffetY: chatCollectionView.contentOffset.y
+        )
         var snapshot = NSDiffableDataSourceSnapshot<AbstractChatSection, AbstractChatItem>()
         messages.forEach {
             snapshot.appendSections([$0])
             snapshot.appendItems($0.data.items, toSection: $0)
         }
-        diffableDataSource.apply(snapshot, animatingDifferences: true)
+        diffableDataSource.apply(snapshot, animatingDifferences: false)
+
+        chatCollectionView.setContentOffset(.init(x: 0, y: chatCollectionView.contentSize.height - beforePosition), animated: true)
     }
 }
 

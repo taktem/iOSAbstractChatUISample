@@ -2,7 +2,7 @@
 //  AbstractChatInputCompo.swift
 //  
 //
-//  Created by Taku Nishimura on 2022/03/01.
+//  Created by taktem on 2022/03/01.
 //
 
 import UIKit

@@ -82,7 +82,7 @@ public final class AbstractChatViewController: UIViewController {
     }
 
     public func configure(messages: [AbstractChatSection]) {
-        let beforePosition = AbstractChatLayoutCalculator.distanceFromBottomEdge(
+        let beforePosition = AbstractChatLayoutCalculator.differenceContentOffsetFromBottomEdge(
             containerHeight: chatCollectionView.bounds.height,
             contentHeight: chatCollectionView.contentSize.height,
             contentOffetY: chatCollectionView.contentOffset.y
@@ -94,7 +94,12 @@ public final class AbstractChatViewController: UIViewController {
         }
         diffableDataSource.apply(snapshot, animatingDifferences: false)
 
-        chatCollectionView.setContentOffset(.init(x: 0, y: chatCollectionView.contentSize.height - beforePosition), animated: true)
+        let resultPosition = AbstractChatLayoutCalculator.contentOffsetWithdifferenceFromBottomEdge(
+            containerHeight: chatCollectionView.bounds.height,
+            contentHeight: chatCollectionView.contentSize.height,
+            differenceFromBottomEdge: beforePosition
+        )
+        chatCollectionView.setContentOffset(.init(x: 0, y: resultPosition), animated: true)
     }
 }
 

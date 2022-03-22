@@ -73,12 +73,17 @@ public final class AbstractChatViewController: UIViewController {
 
     public func configureInputComponents(
         mainInput: AbstractChatMainInputComponent,
-        optionalInputs: [AbstractChatOptionalInputComponent]
+        optionalInputs: [AbstractChatOptionalInputDataSource]
     ) {
         inputStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
 
+        if (!optionalInputs.isEmpty) {
+            inputStackView.addArrangedSubview(AbstractChatOptionalInputLauncherComponent(didTap: {
+                
+            }))
+        }
+
         inputStackView.addArrangedSubview(mainInput)
-        // TODO: - optionalInputs
     }
 
     public func configure(messages: [AbstractChatSection]) {

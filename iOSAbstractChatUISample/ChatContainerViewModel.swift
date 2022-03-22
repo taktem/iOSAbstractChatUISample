@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import AbstractChat
+import UIKit
 
 final class ChatContainerViewModel: ObservableObject {
     enum Event {
@@ -19,6 +20,10 @@ final class ChatContainerViewModel: ObservableObject {
 
     func didSubmit(text: String) {
         addNewMessage(text: text)
+    }
+
+    func didSubmit(image: UIImage) {
+        
     }
 
     private func addNewMessage(text: String) {

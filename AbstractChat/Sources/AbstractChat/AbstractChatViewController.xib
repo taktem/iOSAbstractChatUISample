@@ -37,7 +37,7 @@
                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jcp-UE-nlP">
                             <rect key="frame" x="16" y="0.0" width="382" height="44"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="94Y-R2-191" userLabel="Dummy">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="94Y-R2-191" userLabel="Main">
                                     <rect key="frame" x="0.0" y="0.0" width="382" height="44"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>

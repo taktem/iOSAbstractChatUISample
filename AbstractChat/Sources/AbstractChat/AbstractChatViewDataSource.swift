@@ -63,17 +63,10 @@ public struct AbstractChatItem: Hashable {
 }
 
 public protocol AbstractChatMainInputComponent: UIView {
-    
+
 }
 
-public struct AbstractChatOptionalInputDataSource {
-    enum Icon {
-        case image(UIImage)
-    }
-    let icon: Icon
-    let component: AbstractChatOptionalInputComponent
-}
-
-public protocol AbstractChatOptionalInputComponent: UIView {
-
+public protocol AbstractChatOptionalInputDataSource {
+    var icon: UIImage { get }
+    var executer: (() -> Void) { get }
 }

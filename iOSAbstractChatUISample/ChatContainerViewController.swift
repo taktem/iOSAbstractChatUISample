@@ -23,7 +23,7 @@ final class ChatContainerViewController: UIViewController {
         ])
 
     private let dependency: Depndency
-    private var anyCancellable = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
     private let viewModel = ChatContainerViewModel()
     private var messeges = [AbstractChatSection]()
 
@@ -65,13 +65,13 @@ final class ChatContainerViewController: UIViewController {
                     self?.dependency.closeAction()
                 }
             })
-            .store(in: &anyCancellable)
+            .store(in: &cancellables)
 
         viewModel.messeges
             .sink(receiveValue: { [weak self] in
                 self?.chatViewController.configure(messages: $0)
             })
-            .store(in: &anyCancellable)
+            .store(in: &cancellables)
     }
 
     @IBAction private func didTapCloseButton() {

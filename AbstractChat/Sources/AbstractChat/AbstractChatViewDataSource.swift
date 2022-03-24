@@ -9,6 +9,7 @@ public struct AbstractChatConfiguration {
     public init() {}
 }
 
+// Message Components
 public struct AbstractChatSectionIdentifier: Hashable {
     public let value: String
     public init(value: String) {
@@ -30,7 +31,8 @@ public struct AbstractChatSection: Hashable {
     }
 
     public static func == (lhs: AbstractChatSection, rhs: AbstractChatSection) -> Bool {
-        lhs.data.identifier.hashValue == rhs.data.identifier.hashValue
+        lhs.data.identifier == rhs.data.identifier
+        && lhs.data.items == rhs.data.items
     }
 
     public func hash(into hasher: inout Hasher) {
@@ -48,13 +50,19 @@ public struct AbstractChatItemIdentifier: Hashable {
 public protocol AbstractChatItemDataSource {
     var identifier: AbstractChatItemIdentifier { get }
     func dequeue(target: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell
+    func isSameContents(to: AbstractChatItemDataSource) -> Bool
+}
+
+public protocol AbstractChatItemCell {
+    func didLongTap()
 }
 
 public struct AbstractChatItem: Hashable {
     public let dataSource: AbstractChatItemDataSource
 
     public static func == (lhs: AbstractChatItem, rhs: AbstractChatItem) -> Bool {
-        lhs.dataSource.identifier.hashValue == rhs.dataSource.identifier.hashValue
+        lhs.dataSource.identifier == rhs.dataSource.identifier &&
+        lhs.dataSource.isSameContents(to: rhs.dataSource)
     }
 
     public func hash(into hasher: inout Hasher) {
@@ -62,6 +70,8 @@ public struct AbstractChatItem: Hashable {
     }
 }
 
+
+// Inputs
 public protocol AbstractChatMainInputComponent: UIView {
 
 }
@@ -69,4 +79,10 @@ public protocol AbstractChatMainInputComponent: UIView {
 public protocol AbstractChatOptionalInputDataSource {
     var icon: UIImage { get }
     var executer: (() -> Void) { get }
+}
+
+extension AbstractChatOptionalInputDataSource {
+    func execute() {
+        executer()
+    }
 }

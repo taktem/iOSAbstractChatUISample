@@ -10,12 +10,12 @@ public struct AbstractChatSimpleMessageSectionData: AbstractChatSectionData {
     public let layout: NSCollectionLayoutSection = {
         let item = NSCollectionLayoutItem(layoutSize: .init(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(200.0)
+            heightDimension: .estimated(44.0)
         ))
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: .init(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .estimated(200.0)
+                heightDimension: .estimated(44.0)
             ),
             subitems: [item]
         )
@@ -54,10 +54,16 @@ public struct AbstractChatSimpleMessageItemDataSource: AbstractChatItemDataSourc
                 $0.configure(item: item)
             }
     }
+
+    public func isSameContents(to: AbstractChatItemDataSource) -> Bool {
+        guard let target = to as? AbstractChatSimpleMessageItemDataSource else { return false }
+        return identifier == target.identifier &&
+        item == item
+    }
 }
 
 public final class AbstractChatSimpleMessageCell: UICollectionViewCell {
-    public struct Item {
+    public struct Item: Equatable {
         public init(message: String) {
             self.message = message
         }

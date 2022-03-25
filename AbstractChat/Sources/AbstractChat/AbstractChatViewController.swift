@@ -67,6 +67,14 @@ public final class AbstractChatViewController: UIViewController {
                 let item = strongSelf.diffableDataSource.snapshot().itemIdentifiers(inSection: section)[indexPath.item]
 
                 let cell = item.dataSource.dequeue(target: _collectionView, indexPath: indexPath)
+
+                let longTapGesture = UILongPressGestureRecognizer(
+                    target: strongSelf,
+                    action: #selector(AbstractChatViewController.didTapCollectionViewCell(_:)))
+                longTapGesture.delegate = strongSelf
+
+                cell.addGestureRecognizer(longTapGesture)
+
                 return cell
         }
     }
@@ -111,5 +119,16 @@ public final class AbstractChatViewController: UIViewController {
 
 extension AbstractChatViewController: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    }
+}
+
+extension AbstractChatViewController: UIGestureRecognizerDelegate {
+    @objc func didTapCollectionViewCell(_ sender: UILongPressGestureRecognizer) {
+        guard let cell = sender.view as? AbstractChatItemLongTappableCell else { return }
+        switch sender.state {
+        case .began: cell.didLongTap()
+        case .possible, .ended, .changed, .cancelled, .failed: ()
+        @unknown default: ()
+        }
     }
 }

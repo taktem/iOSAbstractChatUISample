@@ -53,7 +53,7 @@ public protocol AbstractChatItemDataSource {
     func isSameContents(to: AbstractChatItemDataSource) -> Bool
 }
 
-public protocol AbstractChatItemCell {
+public protocol AbstractChatItemLongTappableCell {
     func didLongTap()
 }
 

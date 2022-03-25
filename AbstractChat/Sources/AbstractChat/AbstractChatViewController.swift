@@ -79,7 +79,8 @@ public final class AbstractChatViewController: UIViewController {
 
         if (!optionalInputs.isEmpty) {
             inputStackView.addArrangedSubview(AbstractChatOptionalInputLauncherComponent(didTap: {
-                
+                // 複数のコンポーネント発火はいったん後回し
+                optionalInputs.first?.execute()
             }))
         }
 

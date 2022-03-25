@@ -53,7 +53,13 @@ final class ChatContainerViewController: UIViewController {
             mainInput: AbstractChatMainInputComponentText(didSubmitText: { [weak self] in
                 self?.viewModel.didSubmit(text: $0)
             }),
-            optionalInputs: []
+            optionalInputs: [
+                AbstractChatOptionalInputDataSourceDummy(
+                    targetBaseViewController: self,
+                    didSelectImage: { [weak self] in
+                        self?.viewModel.didSubmit(image: $0)
+                    })
+            ]
         )
     }
 

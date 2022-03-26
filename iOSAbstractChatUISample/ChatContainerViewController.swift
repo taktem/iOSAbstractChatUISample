@@ -16,16 +16,16 @@ final class ChatContainerViewController: UIViewController {
 
     @IBOutlet private weak var containerView: UIView!
 
-    private let chatViewController = AbstractChatViewController(
-        configuration: AbstractChatConfiguration(),
+    private let chatViewController = ChatViewController(
+        configuration: ChatConfiguration(),
         xibLinkedClasses: [
-            AbstractChatSimpleMessageCell.self
+            ChatSimpleMessageCell.self
         ])
 
     private let dependency: Depndency
     private var cancellables = Set<AnyCancellable>()
     private let viewModel = ChatContainerViewModel()
-    private var messeges = [AbstractChatSection]()
+    private var messeges = [ChatSection]()
 
     init(dependency: Depndency) {
         self.dependency = dependency
@@ -50,11 +50,11 @@ final class ChatContainerViewController: UIViewController {
 
     private func setupChatView() {
         chatViewController.configureInputComponents(
-            mainInput: AbstractChatMainInputComponentText(didSubmitText: { [weak self] in
+            mainInput: ChatMainInputComponentText(didSubmitText: { [weak self] in
                 self?.viewModel.didSubmit(text: $0)
             }),
             optionalInputs: [
-                AbstractChatOptionalInputDataSourceDummy(
+                ChatOptionalInputDataSourceDummy(
                     targetBaseViewController: self,
                     didSelectImage: { [weak self] in
                         self?.viewModel.didSubmit(image: $0)

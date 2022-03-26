@@ -4,8 +4,8 @@
 //
 
 import XCTest
-@testable import iOSAbstractChatUISample
+@testable import iOSChatUISample
 
-class iOSAbstractChatUISampleTests: XCTestCase {
+class iOSChatUISampleTests: XCTestCase {
 
 }

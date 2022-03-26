@@ -4,9 +4,9 @@
 //
 
 import XCTest
-@testable import AbstractChat
+@testable import Chat
 
-final class AbstractChatLayoutCalculatorTests: XCTestCase {
+final class ChatLayoutCalculatorTests: XCTestCase {
     func test下端とのcontentOffsetYを測る() {
         func test(
             containerHeight: Double,
@@ -16,7 +16,7 @@ final class AbstractChatLayoutCalculatorTests: XCTestCase {
             line: UInt = #line
         ) {
             XCTAssertEqual(
-                AbstractChatLayoutCalculator.differenceContentOffsetFromBottomEdge(
+                ChatLayoutCalculator.differenceContentOffsetFromBottomEdge(
                     containerHeight: containerHeight,
                     contentHeight: contentHeight,
                     contentOffetY: contentOffetY
@@ -45,7 +45,7 @@ final class AbstractChatLayoutCalculatorTests: XCTestCase {
             line: UInt = #line
         ) {
             XCTAssertEqual(
-                AbstractChatLayoutCalculator.contentOffsetWithdifferenceFromBottomEdge(
+                ChatLayoutCalculator.contentOffsetWithdifferenceFromBottomEdge(
                     containerHeight: containerHeight,
                     contentHeight: contentHeight,
                     differenceFromBottomEdge: difference),

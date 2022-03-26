@@ -6,7 +6,7 @@
 import UIKit
 import UIUtility
 
-public struct AbstractChatSimpleMessageSectionData: AbstractChatSectionData {
+public struct ChatSimpleMessageSectionData: ChatSectionData {
     public let layout: NSCollectionLayoutSection = {
         let item = NSCollectionLayoutItem(layoutSize: .init(
             widthDimension: .fractionalWidth(1.0),
@@ -22,26 +22,27 @@ public struct AbstractChatSimpleMessageSectionData: AbstractChatSectionData {
         return NSCollectionLayoutSection(group: group)
     }()
 
-    public let identifier: AbstractChatSectionIdentifier
-    public let items: [AbstractChatItem]
+    public let identifier: ChatSectionIdentifier
+    public let items: [ChatItem]
 
     public init(
-        identifier: AbstractChatSectionIdentifier,
-        item: AbstractChatSimpleMessageItemDataSource
+        identifier: ChatSectionIdentifier,
+        item: ChatSimpleMessageItemDataSource
     ) {
         self.identifier = identifier
-        self.items = [AbstractChatItem.init(dataSource: item)]
+        self.items = [ChatItem.init(dataSource: item)]
     }
 }
 
-public struct AbstractChatSimpleMessageItemDataSource: AbstractChatItemDataSource {
-    public let identifier: AbstractChatItemIdentifier
+public struct ChatSimpleMessageItemDataSource: ChatItemDataSource {
 
-    private let item: AbstractChatSimpleMessageCell.Item
+    public let identifier: ChatItemIdentifier
+
+    private let item: ChatSimpleMessageCell.Item
 
     public init(
-        identifier: AbstractChatItemIdentifier,
-        item: AbstractChatSimpleMessageCell.Item
+        identifier: ChatItemIdentifier,
+        item: ChatSimpleMessageCell.Item
     ) {
         self.identifier = identifier
         self.item = item
@@ -49,20 +50,20 @@ public struct AbstractChatSimpleMessageItemDataSource: AbstractChatItemDataSourc
 
     public func dequeue(target: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
         target.dequeue(
-            xibLinkedClass: AbstractChatSimpleMessageCell.self,
+            xibLinkedClass: ChatSimpleMessageCell.self,
             for: indexPath) {
                 $0.configure(item: item)
             }
     }
 
-    public func isSameContents(to: AbstractChatItemDataSource) -> Bool {
-        guard let target = to as? AbstractChatSimpleMessageItemDataSource else { return false }
+    public func isSameContents(to: ChatItemDataSource) -> Bool {
+        guard let target = to as? ChatSimpleMessageItemDataSource else { return false }
         return identifier == target.identifier &&
         item == item
     }
 }
 
-public final class AbstractChatSimpleMessageCell: UICollectionViewCell {
+public final class ChatSimpleMessageCell: UICollectionViewCell {
     public struct Item: Equatable {
         public init(message: String) {
             self.message = message
@@ -78,4 +79,4 @@ public final class AbstractChatSimpleMessageCell: UICollectionViewCell {
     }
 }
 
-extension AbstractChatSimpleMessageCell: XibLinkedClassProtocol {}
+extension ChatSimpleMessageCell: XibLinkedClassProtocol {}

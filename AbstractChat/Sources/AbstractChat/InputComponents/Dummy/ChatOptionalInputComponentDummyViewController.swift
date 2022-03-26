@@ -5,7 +5,7 @@
 
 import UIKit
 
-final class AbstractChatOptionalInputComponentDummyViewController: UIViewController {
+final class ChatOptionalInputComponentDummyViewController: UIViewController {
 
     private let didSelectImage: ((UIImage) -> Void)
 

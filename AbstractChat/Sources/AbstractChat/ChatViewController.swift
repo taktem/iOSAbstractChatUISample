@@ -7,7 +7,7 @@ import UIKit
 import UIUtility
 import Combine
 
-public final class AbstractChatViewController: UIViewController {
+public final class ChatViewController: UIViewController {
 
     @IBOutlet private weak var chatCollectionView: UICollectionView!
     @IBOutlet private weak var inputStackView: UIStackView!
@@ -15,13 +15,13 @@ public final class AbstractChatViewController: UIViewController {
     private var anyCancellable = Set<AnyCancellable>()
     private let keyboardObserver = KeyboardObserver()
 
-    private let configuration: AbstractChatConfiguration
+    private let configuration: ChatConfiguration
     private let registerer: ((UICollectionView) -> Void)
 
-    private lazy var diffableDataSource: UICollectionViewDiffableDataSource<AbstractChatSection, AbstractChatItem>! = nil
+    private lazy var diffableDataSource: UICollectionViewDiffableDataSource<ChatSection, ChatItem>! = nil
 
     public init<T: XibLinkedClassProtocol>(
-        configuration: AbstractChatConfiguration,
+        configuration: ChatConfiguration,
         xibLinkedClasses: [T.Type]
     ) where T: UICollectionViewCell {
         self.configuration = configuration
@@ -70,7 +70,7 @@ public final class AbstractChatViewController: UIViewController {
 
                 let longTapGesture = UILongPressGestureRecognizer(
                     target: strongSelf,
-                    action: #selector(AbstractChatViewController.didTapCollectionViewCell(_:)))
+                    action: #selector(ChatViewController.didTapCollectionViewCell(_:)))
                 longTapGesture.delegate = strongSelf
 
                 cell.addGestureRecognizer(longTapGesture)
@@ -80,13 +80,13 @@ public final class AbstractChatViewController: UIViewController {
     }
 
     public func configureInputComponents(
-        mainInput: AbstractChatMainInputComponent,
-        optionalInputs: [AbstractChatOptionalInputDataSource]
+        mainInput: ChatMainInputComponent,
+        optionalInputs: [ChatOptionalInputDataSource]
     ) {
         inputStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
 
         if (!optionalInputs.isEmpty) {
-            inputStackView.addArrangedSubview(AbstractChatOptionalInputLauncherComponent(didTap: {
+            inputStackView.addArrangedSubview(ChatOptionalInputLauncherComponent(didTap: {
                 // 複数のコンポーネント発火はいったん後回し
                 optionalInputs.first?.execute()
             }))
@@ -95,20 +95,20 @@ public final class AbstractChatViewController: UIViewController {
         inputStackView.addArrangedSubview(mainInput)
     }
 
-    public func configure(messages: [AbstractChatSection]) {
-        let beforePosition = AbstractChatLayoutCalculator.differenceContentOffsetFromBottomEdge(
+    public func configure(messages: [ChatSection]) {
+        let beforePosition = ChatLayoutCalculator.differenceContentOffsetFromBottomEdge(
             containerHeight: chatCollectionView.bounds.height,
             contentHeight: chatCollectionView.contentSize.height,
             contentOffetY: chatCollectionView.contentOffset.y
         )
-        var snapshot = NSDiffableDataSourceSnapshot<AbstractChatSection, AbstractChatItem>()
+        var snapshot = NSDiffableDataSourceSnapshot<ChatSection, ChatItem>()
         messages.forEach {
             snapshot.appendSections([$0])
             snapshot.appendItems($0.data.items, toSection: $0)
         }
         diffableDataSource.apply(snapshot, animatingDifferences: false)
 
-        let resultPosition = AbstractChatLayoutCalculator.contentOffsetWithdifferenceFromBottomEdge(
+        let resultPosition = ChatLayoutCalculator.contentOffsetWithdifferenceFromBottomEdge(
             containerHeight: chatCollectionView.bounds.height,
             contentHeight: chatCollectionView.contentSize.height,
             differenceFromBottomEdge: beforePosition
@@ -117,14 +117,14 @@ public final class AbstractChatViewController: UIViewController {
     }
 }
 
-extension AbstractChatViewController: UICollectionViewDelegate {
+extension ChatViewController: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
     }
 }
 
-extension AbstractChatViewController: UIGestureRecognizerDelegate {
+extension ChatViewController: UIGestureRecognizerDelegate {
     @objc func didTapCollectionViewCell(_ sender: UILongPressGestureRecognizer) {
-        guard let cell = sender.view as? AbstractChatItemLongTappableCell else { return }
+        guard let cell = sender.view as? ChatItemLongTappableCell else { return }
         switch sender.state {
         case .began: cell.didLongTap()
         case .possible, .ended, .changed, .cancelled, .failed: ()

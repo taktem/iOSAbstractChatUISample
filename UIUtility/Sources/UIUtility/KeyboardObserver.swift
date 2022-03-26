@@ -1,8 +1,6 @@
 //
-//  File.swift
-//  
-//
-//  Created by taktem on 2022/03/01.
+//  Created by taktem on 2022/01/25.
+//  Copyright (c) 2022 taktem. All rights reserved.
 //
 
 import UIKit

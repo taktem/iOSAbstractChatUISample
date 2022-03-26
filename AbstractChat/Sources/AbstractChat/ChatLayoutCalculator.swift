@@ -1,13 +1,11 @@
 //
-//  AbstractChatLayoutCalculator.swift
-//  
-//
-//  Created by taktem on 2022/03/07.
+//  Created by taktem on 2022/01/25.
+//  Copyright (c) 2022 taktem. All rights reserved.
 //
 
 import Foundation
 
-struct AbstractChatLayoutCalculator {
+struct ChatLayoutCalculator {
     static func differenceContentOffsetFromBottomEdge(
         containerHeight: Double,
         contentHeight: Double,

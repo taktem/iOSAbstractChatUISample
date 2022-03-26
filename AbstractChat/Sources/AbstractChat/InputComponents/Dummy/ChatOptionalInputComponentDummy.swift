@@ -5,7 +5,7 @@
 
 import UIKit
 
-public final class AbstractChatOptionalInputDataSourceDummy: AbstractChatOptionalInputDataSource {
+public final class ChatOptionalInputDataSourceDummy: ChatOptionalInputDataSource {
     public typealias Response = UIImage
 
     public let icon = UIImage(systemName: "photo")!
@@ -16,7 +16,7 @@ public final class AbstractChatOptionalInputDataSourceDummy: AbstractChatOptiona
         didSelectImage: @escaping (UIImage) -> Void
     ) {
         executer = { [weak targetBaseViewController] in
-            let component = AbstractChatOptionalInputComponentDummyViewController(didSelectImage: {
+            let component = ChatOptionalInputComponentDummyViewController(didSelectImage: {
                 didSelectImage($0)
                 targetBaseViewController?.dismiss(animated: true)
             })

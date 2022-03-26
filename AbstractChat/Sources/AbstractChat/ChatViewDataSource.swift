@@ -5,32 +5,32 @@
 
 import UIKit
 
-public struct AbstractChatConfiguration {
+public struct ChatConfiguration {
     public init() {}
 }
 
 // Message Components
-public struct AbstractChatSectionIdentifier: Hashable {
+public struct ChatSectionIdentifier: Hashable {
     public let value: String
     public init(value: String) {
         self.value = value
     }
 }
 
-public protocol AbstractChatSectionData {
-    var identifier: AbstractChatSectionIdentifier { get }
+public protocol ChatSectionData {
+    var identifier: ChatSectionIdentifier { get }
     var layout: NSCollectionLayoutSection { get }
-    var items: [AbstractChatItem] { get }
+    var items: [ChatItem] { get }
 }
 
-public struct AbstractChatSection: Hashable {
-    public let data: AbstractChatSectionData
+public struct ChatSection: Hashable {
+    public let data: ChatSectionData
 
-    public init(data: AbstractChatSectionData) {
+    public init(data: ChatSectionData) {
         self.data = data
     }
 
-    public static func == (lhs: AbstractChatSection, rhs: AbstractChatSection) -> Bool {
+    public static func == (lhs: ChatSection, rhs: ChatSection) -> Bool {
         lhs.data.identifier == rhs.data.identifier
         && lhs.data.items == rhs.data.items
     }
@@ -40,27 +40,27 @@ public struct AbstractChatSection: Hashable {
     }
 }
 
-public struct AbstractChatItemIdentifier: Hashable {
+public struct ChatItemIdentifier: Hashable {
     public let value: String
     public init(value: String) {
         self.value = value
     }
 }
 
-public protocol AbstractChatItemDataSource {
-    var identifier: AbstractChatItemIdentifier { get }
+public protocol ChatItemDataSource {
+    var identifier: ChatItemIdentifier { get }
     func dequeue(target: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell
-    func isSameContents(to: AbstractChatItemDataSource) -> Bool
+    func isSameContents(to: ChatItemDataSource) -> Bool
 }
 
-public protocol AbstractChatItemLongTappableCell {
+public protocol ChatItemLongTappableCell {
     func didLongTap()
 }
 
-public struct AbstractChatItem: Hashable {
-    public let dataSource: AbstractChatItemDataSource
+public struct ChatItem: Hashable {
+    public let dataSource: ChatItemDataSource
 
-    public static func == (lhs: AbstractChatItem, rhs: AbstractChatItem) -> Bool {
+    public static func == (lhs: ChatItem, rhs: ChatItem) -> Bool {
         lhs.dataSource.identifier == rhs.dataSource.identifier &&
         lhs.dataSource.isSameContents(to: rhs.dataSource)
     }
@@ -72,16 +72,16 @@ public struct AbstractChatItem: Hashable {
 
 
 // Inputs
-public protocol AbstractChatMainInputComponent: UIView {
+public protocol ChatMainInputComponent: UIView {
 
 }
 
-public protocol AbstractChatOptionalInputDataSource {
+public protocol ChatOptionalInputDataSource {
     var icon: UIImage { get }
     var executer: (() -> Void) { get }
 }
 
-extension AbstractChatOptionalInputDataSource {
+extension ChatOptionalInputDataSource {
     func execute() {
         executer()
     }

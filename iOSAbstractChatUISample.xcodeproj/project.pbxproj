@@ -11,6 +11,7 @@
 		6525CB3B279F01E600A7F863 /* ChatContainerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6525CB39279F01E600A7F863 /* ChatContainerViewController.xib */; };
 		6525CB4427A0417D00A7F863 /* AbstractChat in Frameworks */ = {isa = PBXBuildFile; productRef = 6525CB4327A0417D00A7F863 /* AbstractChat */; };
 		65647B2A27CE7D8B009F38BF /* ChatContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65647B2927CE7D8B009F38BF /* ChatContainerViewModel.swift */; };
+		65B6A73227EF6875003A724C /* UIUtility in Frameworks */ = {isa = PBXBuildFile; productRef = 65B6A73127EF6875003A724C /* UIUtility */; };
 		65FFEB5C279DBEAA00E882E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FFEB5B279DBEAA00E882E6 /* AppDelegate.swift */; };
 		65FFEB5E279DBEAA00E882E6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FFEB5D279DBEAA00E882E6 /* SceneDelegate.swift */; };
 		65FFEB60279DBEAA00E882E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FFEB5F279DBEAA00E882E6 /* ViewController.swift */; };
@@ -54,6 +55,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6525CB4427A0417D00A7F863 /* AbstractChat in Frameworks */,
+				65B6A73227EF6875003A724C /* UIUtility in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,6 +148,7 @@
 			name = iOSAbstractChatUISample;
 			packageProductDependencies = (
 				6525CB4327A0417D00A7F863 /* AbstractChat */,
+				65B6A73127EF6875003A724C /* UIUtility */,
 			);
 			productName = iOSAbstractChatUISample;
 			productReference = 65FFEB58279DBEAA00E882E6 /* iOSAbstractChatUISample.app */;
@@ -527,6 +530,10 @@
 		6525CB4327A0417D00A7F863 /* AbstractChat */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AbstractChat;
+		};
+		65B6A73127EF6875003A724C /* UIUtility */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UIUtility;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

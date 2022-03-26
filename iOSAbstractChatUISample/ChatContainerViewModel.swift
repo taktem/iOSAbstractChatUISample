@@ -1,8 +1,6 @@
 //
-//  ChatContainerViewModel.swift
-//  iOSAbstractChatUISample
-//
 //  Created by taktem on 2022/03/02.
+//  Copyright (c) 2022 taktem. All rights reserved.
 //
 
 import Foundation
@@ -16,7 +14,7 @@ final class ChatContainerViewModel: ObservableObject {
     }
 
     let event = PassthroughSubject<Event, Never>()
-    let messeges = CurrentValueSubject<[AbstractChatSection], Never>([])
+    let messeges = CurrentValueSubject<[ChatSection], Never>([])
 
     func didSubmit(text: String) {
         addNewMessage(text: text)
@@ -27,11 +25,11 @@ final class ChatContainerViewModel: ObservableObject {
     }
 
     private func addNewMessage(text: String) {
-        let item = AbstractChatSimpleMessageItemDataSource(
+        let item = ChatSimpleMessageItemDataSource(
             identifier: .init(value: UUID().uuidString),
-            item: AbstractChatSimpleMessageCell.Item(message: text)
+            item: ChatSimpleMessageCell.Item(message: text)
         )
-        let data = AbstractChatSection(data: AbstractChatSimpleMessageSectionData(
+        let data = ChatSection(data: ChatSimpleMessageSectionData(
             identifier: .init(value: UUID().uuidString),
             item: item
         ))
@@ -46,13 +44,13 @@ final class ChatContainerViewModel: ObservableObject {
     // Mock
     func didTapAddPrevButton() {
         let items = Array(0..<10).map {
-            AbstractChatSimpleMessageItemDataSource(
+            ChatSimpleMessageItemDataSource(
                 identifier: .init(value: UUID().uuidString),
-                item: AbstractChatSimpleMessageCell.Item(message: "古いメッセージ: \($0)")
+                item: ChatSimpleMessageCell.Item(message: "古いメッセージ: \($0)")
             )
         }
         let data = items.map {
-            AbstractChatSection(data: AbstractChatSimpleMessageSectionData(
+            ChatSection(data: ChatSimpleMessageSectionData(
                 identifier: .init(value: UUID().uuidString),
                 item: $0
             ))

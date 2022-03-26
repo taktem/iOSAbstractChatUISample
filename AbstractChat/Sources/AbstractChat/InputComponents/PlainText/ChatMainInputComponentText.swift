@@ -1,14 +1,12 @@
 //
-//  AbstractChatInputCompo.swift
-//  
-//
-//  Created by taktem on 2022/03/01.
+//  Created by taktem on 2022/01/25.
+//  Copyright (c) 2022 taktem. All rights reserved.
 //
 
 import UIKit
 import UIUtility
 
-public final class AbstractChatMainInputComponentText: UIView, AbstractChatMainInputComponent {
+public final class ChatMainInputComponentText: UIView, ChatMainInputComponent {
 
     @IBOutlet private var textView: UITextView!
     @IBOutlet private var textViewHeightConstraint: NSLayoutConstraint!
@@ -20,7 +18,7 @@ public final class AbstractChatMainInputComponentText: UIView, AbstractChatMainI
     ) {
         self.didSubmitText = didSubmitText
         super.init(frame: .zero)
-        let nib = UINib(nibName: "AbstractChatMainInputComponentText", bundle: Bundle.module)
+        let nib = UINib(nibName: "ChatMainInputComponentText", bundle: Bundle.module)
         let view = nib.instantiate(withOwner: self, options: nil).first as! UIView
         addSubview(view)
         view.snap(to: self)
@@ -46,7 +44,7 @@ public final class AbstractChatMainInputComponentText: UIView, AbstractChatMainI
     }
 }
 
-extension AbstractChatMainInputComponentText: UITextViewDelegate {
+extension ChatMainInputComponentText: UITextViewDelegate {
     public func textViewDidChange(_ textView: UITextView) {
         adjustTextViewHeight()
     }

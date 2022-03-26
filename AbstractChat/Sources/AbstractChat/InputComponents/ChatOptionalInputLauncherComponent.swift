@@ -5,7 +5,7 @@
 
 import UIKit
 
-final class AbstractChatOptionalInputLauncherComponent: UIView {
+final class ChatOptionalInputLauncherComponent: UIView {
     private let didTap: (() -> Void)
 
     public init(
@@ -13,7 +13,7 @@ final class AbstractChatOptionalInputLauncherComponent: UIView {
     ) {
         self.didTap = didTap
         super.init(frame: .zero)
-        let nib = UINib(nibName: "AbstractChatOptionalInputLauncherComponent", bundle: Bundle.module)
+        let nib = UINib(nibName: "ChatOptionalInputLauncherComponent", bundle: Bundle.module)
         let view = nib.instantiate(withOwner: self, options: nil).first as! UIView
         addSubview(view)
         view.snap(to: self)

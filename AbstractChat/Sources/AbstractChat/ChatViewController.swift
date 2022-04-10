@@ -16,20 +16,11 @@ public final class ChatViewController: UIViewController {
     private let keyboardObserver = KeyboardObserver()
 
     private let configuration: ChatConfiguration
-    private let registerer: ((UICollectionView) -> Void)
 
     private lazy var diffableDataSource: UICollectionViewDiffableDataSource<ChatSection, ChatItem>! = nil
 
-    public init<T: XibLinkedClassProtocol>(
-        configuration: ChatConfiguration,
-        xibLinkedClasses: [T.Type]
-    ) where T: UICollectionViewCell {
+    public init(configuration: ChatConfiguration) {
         self.configuration = configuration
-        registerer = { target in
-            xibLinkedClasses.forEach {
-                target.register(xibLinkedClass: $0, bundle: Bundle.module)
-            }
-        }
         super.init(nibName: nil, bundle: Bundle.module)
     }
 
@@ -50,9 +41,11 @@ public final class ChatViewController: UIViewController {
             .store(in: &anyCancellable)
     }
 
-    private func setupCollectionView() {
-        registerer(chatCollectionView)
+    public func register<T: XibLinkedClassProtocol>(xibLinkedClasses: T.Type) where T: UICollectionViewCell {
+        chatCollectionView.register(xibLinkedClass: xibLinkedClasses, bundle: Bundle.module)
+    }
 
+    private func setupCollectionView() {
         chatCollectionView.delegate = self
         chatCollectionView.collectionViewLayout = UICollectionViewCompositionalLayout { [weak self] (section: Int, environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             guard let strongSelf = self else { return nil }

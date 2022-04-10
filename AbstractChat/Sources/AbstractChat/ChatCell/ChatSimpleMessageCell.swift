@@ -35,17 +35,19 @@ public struct ChatSimpleMessageSectionData: ChatSectionData {
 }
 
 public struct ChatSimpleMessageItemDataSource: ChatItemDataSource {
-
     public let identifier: ChatItemIdentifier
+    public let interactionMenus: ChatItemInteractionMenus
 
     private let item: ChatSimpleMessageCell.Item
 
     public init(
         identifier: ChatItemIdentifier,
-        item: ChatSimpleMessageCell.Item
+        item: ChatSimpleMessageCell.Item,
+        interactionMenus: ChatItemInteractionMenus
     ) {
         self.identifier = identifier
         self.item = item
+        self.interactionMenus = interactionMenus
     }
 
     public func dequeue(target: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
@@ -80,3 +82,8 @@ public final class ChatSimpleMessageCell: UICollectionViewCell {
 }
 
 extension ChatSimpleMessageCell: XibLinkedClassProtocol {}
+extension ChatSimpleMessageCell: ChatItemLongTappableCell {
+    public func didLongTap(rectOnBaseView: CGRect) {
+        print("longtap")
+    }
+}

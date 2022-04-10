@@ -16,11 +16,7 @@ final class ChatContainerViewController: UIViewController {
 
     @IBOutlet private weak var containerView: UIView!
 
-    private let chatViewController = ChatViewController(
-        configuration: ChatConfiguration(),
-        xibLinkedClasses: [
-            ChatSimpleMessageCell.self
-        ])
+    private let chatViewController = ChatViewController(configuration: ChatConfiguration())
 
     private let dependency: Depndency
     private var cancellables = Set<AnyCancellable>()
@@ -49,6 +45,7 @@ final class ChatContainerViewController: UIViewController {
     }
 
     private func setupChatView() {
+        chatViewController.register(xibLinkedClasses: ChatSimpleMessageCell.self)
         chatViewController.configureInputComponents(
             mainInput: ChatMainInputComponentText(didSubmitText: { [weak self] in
                 self?.viewModel.didSubmit(text: $0)

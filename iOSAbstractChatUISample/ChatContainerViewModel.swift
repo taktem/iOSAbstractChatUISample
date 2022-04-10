@@ -25,9 +25,24 @@ final class ChatContainerViewModel: ObservableObject {
     }
 
     private func addNewMessage(text: String) {
+        let identifier = UUID().uuidString
         let item = ChatSimpleMessageItemDataSource(
-            identifier: .init(value: UUID().uuidString),
-            item: ChatSimpleMessageCell.Item(message: text)
+            identifier: .init(value: identifier),
+            item: ChatSimpleMessageCell.Item(message: text),
+            interactionMenus: ChatItemInteractionMenus.available(items: [
+                ChatItemInteractionMenuCopyText(
+                    text: text,
+                    clipBoardExecuter: {
+                        print("コピー: \($0) from \(identifier)")
+                        // ここでクリップボードへの保存と、保存した旨のメッセージ
+                    }
+                ),
+                ChatItemInteractionMenuDelete(
+                    deleteExecuter: {
+                        print("削除: \(identifier)")
+                        // ここでクリップボードへの保存と、保存した旨のメッセージ
+                    })
+            ])
         )
         let data = ChatSection(data: ChatSimpleMessageSectionData(
             identifier: .init(value: UUID().uuidString),
@@ -46,7 +61,8 @@ final class ChatContainerViewModel: ObservableObject {
         let items = Array(0..<10).map {
             ChatSimpleMessageItemDataSource(
                 identifier: .init(value: UUID().uuidString),
-                item: ChatSimpleMessageCell.Item(message: "古いメッセージ: \($0)")
+                item: ChatSimpleMessageCell.Item(message: "古いメッセージ: \($0)"),
+                interactionMenus: ChatItemInteractionMenus.notAvailable
             )
         }
         let data = items.map {

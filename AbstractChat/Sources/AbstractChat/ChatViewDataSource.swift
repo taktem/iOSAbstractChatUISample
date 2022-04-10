@@ -47,14 +47,25 @@ public struct ChatItemIdentifier: Hashable {
     }
 }
 
+public protocol ChatItemInteractionMenuItem {
+    var name: String { get }
+    func execute()
+}
+
+public enum ChatItemInteractionMenus {
+    case available(items: [ChatItemInteractionMenuItem])
+    case notAvailable
+}
+
 public protocol ChatItemDataSource {
     var identifier: ChatItemIdentifier { get }
+    var interactionMenus: ChatItemInteractionMenus { get }
     func dequeue(target: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell
     func isSameContents(to: ChatItemDataSource) -> Bool
 }
 
-public protocol ChatItemLongTappableCell {
-    func didLongTap()
+public protocol ChatItemLongTappableCell: UICollectionViewCell{
+    func didLongTap(rectOnBaseView: CGRect)
 }
 
 public struct ChatItem: Hashable {

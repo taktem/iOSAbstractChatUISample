@@ -141,6 +141,12 @@ public final class ChatViewController: UIViewController {
     }
 }
 
+extension ChatViewController: UIScrollViewDelegate {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        removeMenu()
+    }
+}
+
 extension ChatViewController: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
     }

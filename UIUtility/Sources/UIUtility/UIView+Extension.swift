@@ -14,4 +14,16 @@ public extension UIView {
         self.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: edgeInsets.left).isActive = true
         self.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -edgeInsets.right).isActive = true
     }
+    
+    func snapOnTop(of view: UIView) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.bottomAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+        self.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    }
+    
+    func snapOnBottom(of view: UIView) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.topAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+        self.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    }
 }

@@ -28,4 +28,16 @@ struct ChatLayoutCalculator {
 
         return contentHeight - differenceFromBottomEdge
     }
+    
+    enum MenuItemAnchorPoint {
+        case onTopOfTheCell, onBottomOfTheCell
+    }
+    
+    // TOOD: - 暫定的に固定値を返しているが、適切な計算を行いテストも追加する
+    static func menuItemAnchorPoint(
+        containerHeight: Double,
+        cellMidY: Double
+    ) -> MenuItemAnchorPoint {
+        return .onTopOfTheCell
+    }
 }

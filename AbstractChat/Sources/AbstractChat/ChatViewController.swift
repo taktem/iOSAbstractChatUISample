@@ -18,7 +18,8 @@ public final class ChatViewController: UIViewController {
     private let configuration: ChatConfiguration
 
     private lazy var diffableDataSource: UICollectionViewDiffableDataSource<ChatSection, ChatItem>! = nil
-
+    private var optionalFlowtingComponents = [UIView]()
+    
     public init(configuration: ChatConfiguration) {
         self.configuration = configuration
         super.init(nibName: nil, bundle: Bundle.module)
@@ -108,6 +109,36 @@ public final class ChatViewController: UIViewController {
         )
         chatCollectionView.setContentOffset(.init(x: 0, y: resultPosition), animated: true)
     }
+    
+    private func addMenu(
+        interactionMenuItems: [ChatItemInteractionMenuItem],
+        targetCell: UICollectionViewCell,
+        anchorPoint: ChatLayoutCalculator.MenuItemAnchorPoint
+    ) {
+        let items = interactionMenuItems.map { item in
+            ChatItemInteractionMenuContainerView.Item(
+                name: item.name) { [weak self] in
+                    self?.removeMenu()
+                    item.execute()
+                }
+        }
+        let menuContainerView = ChatItemInteractionMenuContainerView(items: items)
+        chatCollectionView.addSubview(menuContainerView)
+        
+        switch anchorPoint {
+        case .onTopOfTheCell: menuContainerView.snapOnTop(of: targetCell)
+        case .onBottomOfTheCell: menuContainerView.snapOnBottom(of: targetCell)
+        }
+        
+        optionalFlowtingComponents.append(menuContainerView)
+    }
+    
+    private func removeMenu() {
+        optionalFlowtingComponents.forEach {
+            $0.removeFromSuperview()
+        }
+        optionalFlowtingComponents.removeAll()
+    }
 }
 
 extension ChatViewController: UICollectionViewDelegate {
@@ -120,7 +151,21 @@ extension ChatViewController: UIGestureRecognizerDelegate {
         guard let cell = sender.view as? UICollectionViewCell else { return }
         switch sender.state {
         case .began:
-            let rect = chatCollectionView.convert(cell.frame, to: self.view)
+            guard let indexPath = chatCollectionView.indexPath(for: cell) else { return }
+            let chatItem = diffableDataSource.snapshot()
+                .sectionIdentifiers[indexPath.section]
+                .data.items[indexPath.row]
+            switch chatItem.dataSource.interactionMenus {
+            case .notAvailable: ()
+            case .available(let items):
+                let anchorPoint = ChatLayoutCalculator.menuItemAnchorPoint(
+                    containerHeight: view.frame.height,
+                    cellMidY: chatCollectionView.convert(cell.frame, to: view).midY)
+                addMenu(
+                    interactionMenuItems: items,
+                    targetCell: cell,
+                    anchorPoint: anchorPoint)
+            }
         case .possible, .ended, .changed, .cancelled, .failed: ()
         @unknown default: ()
         }

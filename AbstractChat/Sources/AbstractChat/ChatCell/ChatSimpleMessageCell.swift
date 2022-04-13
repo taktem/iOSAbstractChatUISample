@@ -82,8 +82,3 @@ public final class ChatSimpleMessageCell: UICollectionViewCell {
 }
 
 extension ChatSimpleMessageCell: XibLinkedClassProtocol {}
-extension ChatSimpleMessageCell: ChatItemLongTappableCell {
-    public func didLongTap(rectOnBaseView: CGRect) {
-        print("longtap")
-    }
-}

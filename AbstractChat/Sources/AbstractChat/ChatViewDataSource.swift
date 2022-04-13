@@ -64,10 +64,6 @@ public protocol ChatItemDataSource {
     func isSameContents(to: ChatItemDataSource) -> Bool
 }
 
-public protocol ChatItemLongTappableCell: UICollectionViewCell{
-    func didLongTap(rectOnBaseView: CGRect)
-}
-
 public struct ChatItem: Hashable {
     public let dataSource: ChatItemDataSource
 

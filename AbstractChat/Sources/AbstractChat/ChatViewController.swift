@@ -117,11 +117,10 @@ extension ChatViewController: UICollectionViewDelegate {
 
 extension ChatViewController: UIGestureRecognizerDelegate {
     @objc func didTapCollectionViewCell(_ sender: UILongPressGestureRecognizer) {
-        guard let cell = sender.view as? ChatItemLongTappableCell else { return }
+        guard let cell = sender.view as? UICollectionViewCell else { return }
         switch sender.state {
         case .began:
             let rect = chatCollectionView.convert(cell.frame, to: self.view)
-            cell.didLongTap(rectOnBaseView: rect)
         case .possible, .ended, .changed, .cancelled, .failed: ()
         @unknown default: ()
         }
